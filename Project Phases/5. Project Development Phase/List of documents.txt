@@ -1,0 +1,6 @@
+->No. of Functional Features included in the solution
+->Code Structure, Readability, and Reusability
+->State Management Efficiency
+->Routing & Navigation
+->API Integration & Data Fetching
+->Responsive Design & Accessibility
