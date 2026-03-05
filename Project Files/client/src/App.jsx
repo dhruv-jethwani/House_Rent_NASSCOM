@@ -4,16 +4,20 @@ import Register from './components/Register'
 import Login from './components/Login'
 import Home from './components/Home'
 import FlashBar from './components/FlashBar'
+import Navbar from './components/Navbar' // Import your new Navbar component
+import Logout from './components/Logout'
+import PropertyList from './components/PropertyList'
+import Support from './components/Support'
+import Approval from './components/Approval'
 
 function App() {
-  // flash message state lives at the top of the app. we read from
-  // sessionStorage on initialization and also whenever the location
-  // changes, which covers the common case where a component stores a
-  // message then navigates (e.g. register -> login).
   const [flash, setFlash] = useState('');
   const location = useLocation();
 
-  // whenever the URL changes, attempt to pull a message out of storage
+  // Define paths where Navbar should be hidden
+  const authPaths = ['/', '/login'];
+  const shouldShowNavbar = !authPaths.includes(location.pathname);
+
   useEffect(() => {
     const msg = sessionStorage.getItem('flash');
     if (msg) {
@@ -26,16 +30,21 @@ function App() {
 
   return (
     <>
-      {/* top-level notification bar, displayed on every page when `flash` is set */}
+      {/* 1. FlashBar stays at the absolute top */}
       <FlashBar message={flash} />
 
+      {/* 2. Conditionally render Navbar based on current URL */}
+      {shouldShowNavbar && <Navbar />}
+
       <Routes>
-        <Route path='/' element={<Register/>}></Route>
-        <Route path='/login' element={<Login/>}></Route>
-        <Route path='/home' element={<Home/>}></Route>
-        {/* <Route path='/about' element={<About/>}></Route>
-        <Route path='/products' element={<ProductList/>}></Route>
-        <Route path='/logout' element={<Logout/>}></Route> */}
+        <Route path='/' element={<Register />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/home' element={<Home />}></Route>
+        <Route path='/logout' element={<Logout />}></Route> 
+        <Route path='/search' element={<PropertyList />}></Route> 
+        <Route path='/support' element={<Support />}></Route> 
+        <Route path='/admin/approvals' element={<Approval />}></Route> 
+       
       </Routes>
     </>
   )

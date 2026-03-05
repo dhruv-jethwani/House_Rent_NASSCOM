@@ -38,21 +38,21 @@ function Login() {
     }
 
     return (
-        <div className="shopez-page-wrapper">
+        <div className="house-rent-page-wrapper">
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-5 col-lg-4">
-                        <div className="card shopez-card shadow-lg p-4">
+                        <div className="card house-rent-card shadow-lg p-4">
                             <div className="card-body">
                                 <div className="text-center mb-4">
-                                    <h2 className="fw-bold" style={{ color: '#1e293b' }}>ShopEZ</h2>
+                                    <h2 className="fw-bold" style={{ color: '#1e293b' }}>HouseHunt</h2>
                                     <p className="text-muted small">Welcome back! Login to continue.</p>
                                 </div>
                                 
                                 <form onSubmit={onsubmit}>
                                     <div className="mb-3">
                                         <label className="form-label small fw-bold text-uppercase text-muted">Username</label>
-                                        <div className="input-group shopez-input-group">
+                                        <div className="input-group house-rent-input-group">
                                             <span className="input-group-text border-0 bg-transparent text-muted ps-3">
                                                 <i className="bi bi-person-circle"></i>
                                             </span>
@@ -62,7 +62,7 @@ function Login() {
 
                                     <div className="mb-4">
                                         <label className="form-label small fw-bold text-uppercase text-muted">Password</label>
-                                        <div className="input-group shopez-input-group">
+                                        <div className="input-group house-rent-input-group">
                                             <span className="input-group-text border-0 bg-transparent text-muted ps-3">
                                                 <i className="bi bi-shield-lock"></i>
                                             </span>
@@ -73,7 +73,7 @@ function Login() {
                                         </div>
                                     </div>
 
-                                    <button className="btn shopez-btn w-100 py-3 mb-3" type="submit" disabled={loading}>
+                                    <button className="btn house-rent-btn w-100 py-3 mb-3" type="submit" disabled={loading}>
                                         {loading ? <span className="spinner-border spinner-border-sm"></span> : "LOGIN"}
                                     </button>
                                 </form>
