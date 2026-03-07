@@ -4,14 +4,14 @@ import { ENDPOINTS } from '../../../config';
 
 function AddProperty() {
     const [formData, setFormData] = useState({
-        propertyTitle: '', // Added state for title
+        propertyTitle: '',
         propertyType: 'Residential',
         propertyAdType: 'Rent',
         propertyAddress: '',
         ownerContact: '',
         propertyAmt: 0,
         additionalInfo: '',
-        propertyImage: '' // Handled as string URL/path for this project
+        propertyImage: ''
     });
 
     const handleChange = (e) => {
@@ -39,7 +39,6 @@ function AddProperty() {
             <h3 className="text-center fw-bold mb-5" style={{ color: '#FF6B6B' }}>Add New Property</h3>
             
             <form onSubmit={handleSubmit}>
-                {/* New Row for Property Title */}
                 <div className="row mb-4">
                     <div className="col-12">
                         <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Title / Name</label>

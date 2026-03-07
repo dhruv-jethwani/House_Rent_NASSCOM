@@ -9,11 +9,9 @@ function OwnerProperties() {
     const [loading, setLoading] = useState(true);
     const currentUserId = localStorage.getItem('userId');
 
-    // 1. Fetch properties and filter by current owner
     const fetchProps = async () => {
         try {
             const response = await axios.get(ENDPOINTS.GET_PROPERTIES);
-            // Ensure we are filtering based on the ownerId object structure
             const mine = response.data.properties.filter(p => 
                 p.ownerId === currentUserId || p.ownerId?._id === currentUserId
             );
@@ -29,7 +27,6 @@ function OwnerProperties() {
         fetchProps();
     }, [currentUserId]);
 
-    // 2. Edit Logic
     const startEdit = (property) => {
         setEditingProperty(property._id);
         setEditData(property);
@@ -42,7 +39,6 @@ function OwnerProperties() {
     const saveEdit = async (e) => {
         e.preventDefault();
         try {
-            // hitting the PUT route: /api/properties/:id
             await axios.put(`${ENDPOINTS.GET_PROPERTIES}/${editingProperty}`, editData);
             setEditingProperty(null);
             sessionStorage.setItem('flash', 'Property updated successfully!');
@@ -53,7 +49,6 @@ function OwnerProperties() {
         }
     };
 
-    // 3. Delete Logic
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this property?")) return;
         try {
@@ -70,7 +65,6 @@ function OwnerProperties() {
     return (
         <div className="table-responsive rounded-3 overflow-hidden">
             {editingProperty ? (
-                /* EDIT FORM VIEW */
                 <div className="p-4 rounded shadow-lg border" style={{ backgroundColor: '#f8f9ff', borderColor: '#e0e7ff' }}>
                     <h5 className="mb-4" style={{ color: '#FF6B6B' }}>Edit Property: {editData.propertyTitle}</h5>
                     <form onSubmit={saveEdit} className="row g-3">
@@ -100,7 +94,6 @@ function OwnerProperties() {
                     </form>
                 </div>
             ) : (
-                /* TABLE VIEW */
                 <table className="table table-hover mb-0 align-middle text-center">
                     <thead style={{ background: 'linear-gradient(90deg, #4ECDC4, #45B7D1)' }}>
                         <tr>

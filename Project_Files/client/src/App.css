@@ -105,3 +105,22 @@ textarea::placeholder {
     min-height: 100vh;
     padding-bottom: 2rem;
 }
+
+/* New Login Button Style with Hover Effects */
+.house-login-btn {
+    background: linear-gradient(90deg, #4ECDC4, #45B7D1);
+    border: none;
+    border-radius: 14px;
+    color: #ffffff !important;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.house-login-btn:hover {
+    transform: scale(1.03) translateY(-3px);
+    box-shadow: 0 12px 24px rgba(78, 205, 196, 0.4);
+    color: #ffffff;
+}

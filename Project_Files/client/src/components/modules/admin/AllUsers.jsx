@@ -6,7 +6,6 @@ function AllUsers() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 1. Fetch all users from the backend
     const fetchUsers = async () => {
         try {
             const response = await axios.get(ENDPOINTS.GET_USERS);
@@ -22,11 +21,9 @@ function AllUsers() {
         fetchUsers();
     }, []);
 
-    // 2. Grant or Ungrant Owner status
     const handleStatusChange = async (userId, newStatus) => {
         try {
             await axios.put(ENDPOINTS.UPDATE_USER_STATUS(userId), { granted: newStatus });
-            // Update local state to show change immediately
             fetchUsers();
             sessionStorage.setItem('flash', `Owner status updated to ${newStatus}`);
         } catch (error) {
@@ -35,11 +32,9 @@ function AllUsers() {
         }
     };
 
-    // 3. Delete user logic
     const handleDeleteUser = async (userId) => {
         if (!window.confirm("Are you sure you want to delete this user permanently?")) return;
         try {
-            // Reusing the base GET_USERS endpoint but appending ID for DELETE
             await axios.delete(`${ENDPOINTS.GET_USERS}/${userId}`);
             setUsers(users.filter(u => u._id !== userId));
             sessionStorage.setItem('flash', 'User deleted successfully');

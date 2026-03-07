@@ -18,7 +18,7 @@ function Login() {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('type', response.data.type);
             localStorage.setItem('username', response.data.username);
-            localStorage.setItem('userId', response.data.userid); // Important for bookings
+            localStorage.setItem('userId', response.data.userid);
             
             sessionStorage.setItem('flash', `Welcome back!`);
             navigate(`/${response.data.type.toLowerCase()}`);

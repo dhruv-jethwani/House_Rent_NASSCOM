@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RenterPropertiesCards from './RenterPropertiesCards';
-import RenterBookings from './RenterBookings'; // Import the new component
+import RenterBookings from './RenterBookings';
 
 function RenterHome() {
     const [activeTab, setActiveTab] = useState('All Properties');

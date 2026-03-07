@@ -13,7 +13,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg border-bottom" style={{ background: 'linear-gradient(90deg, #f0f4ff 0%, #ffe8f0 100%)', borderColor: '#e0e7ff !important', padding: '1rem 0' }}>
+        <nav className="navbar navbar-expand-lg border-bottom" style={{ background: 'linear-gradient(90deg, #f0f4ff 0%, #ffe8f0 100%)', borderColor: '#e0e7ff !important', padding: '1rem 0', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9998, width: '100%', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
             <div className="container">
                 <Link className="navbar-brand fw-bold fs-3" style={{ color: '#4f46e5' }} to={token ? `/${type.toLowerCase()}` : "/"}>
                     House<span style={{ color: '#FF6B6B' }}>Hunt</span>

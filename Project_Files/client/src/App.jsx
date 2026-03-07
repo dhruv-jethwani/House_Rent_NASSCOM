@@ -25,17 +25,16 @@ function App() {
     setFlash(msg);
     sessionStorage.removeItem('flash');
     
-    // Ensure the timer is set to clear the state
     const timer = setTimeout(() => {
       setFlash('');
     }, 4000);
 
     return () => clearTimeout(timer);
   }
-}, [location.pathname]); // Use pathname specifically to detect the landing after reload
+}, [location.pathname]);
 
   return (
-    <div className="dashboard-wrapper">
+    <div className="dashboard-wrapper" style={{ paddingTop: '80px' }}>
       <FlashBar message={flash} />
       <Navbar />
 
