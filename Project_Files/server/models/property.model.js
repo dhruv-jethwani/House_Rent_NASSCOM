@@ -6,11 +6,11 @@ const propertySchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-		propertyTitle: { 
-			type: String, 
-			required: true, 
-			trim: true 
-		},
+    propertyTitle: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    },
     propertyType: {
         type: String,
         required: [true, 'Please provide a Property Type'],
@@ -24,6 +24,11 @@ const propertySchema = new mongoose.Schema({
     propertyAddress: {
         type: String,
         required: [true, 'Please Provide an Address'],
+        trim: true
+    },
+    state: {
+        type: String,
+        required: [true, 'Please provide a State'],
         trim: true
     },
     ownerContact: {

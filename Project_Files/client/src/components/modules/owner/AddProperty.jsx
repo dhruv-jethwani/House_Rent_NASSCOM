@@ -8,6 +8,7 @@ function AddProperty() {
         propertyType: 'Residential',
         propertyAdType: 'Rent',
         propertyAddress: '',
+        state: '',
         ownerContact: '',
         propertyAmt: 0,
         additionalInfo: '',
@@ -70,22 +71,29 @@ function AddProperty() {
                         </select>
                     </div>
                     <div className="col-md-4">
-                        <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Full Address</label>
-                        <input type="text" className="form-control dark-input" placeholder="Address" name="propertyAddress" value={formData.propertyAddress} onChange={handleChange} required />
+                        <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>State</label>
+                        <input type="text" className="form-control dark-input" placeholder="e.g. Gujarat, Maharashtra" name="state" value={formData.state} onChange={handleChange} required />
                     </div>
                 </div>
 
                 <div className="row g-4 mb-4">
-                    <div className="col-md-4">
+                    <div className="col-md-6">
+                        <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Full Address</label>
+                        <input type="text" className="form-control dark-input" placeholder="Address" name="propertyAddress" value={formData.propertyAddress} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
                         <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Image URL</label>
                         <input type="text" className="form-control dark-input" placeholder="Paste image link" name="propertyImage" value={formData.propertyImage} onChange={handleChange} required />
                     </div>
-                    <div className="col-md-4">
+                </div>
+
+                <div className="row g-4 mb-4">
+                    <div className="col-md-6">
                         <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Owner Contact No.</label>
                         <input type="text" className="form-control dark-input" placeholder="Contact number" name="ownerContact" value={formData.ownerContact} onChange={handleChange} required />
                     </div>
-                    <div className="col-md-4">
-                        <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Amount</label>
+                    <div className="col-md-6">
+                        <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>Property Amount (₹)</label>
                         <input type="number" className="form-control dark-input" name="propertyAmt" value={formData.propertyAmt} onChange={handleChange} required />
                     </div>
                 </div>

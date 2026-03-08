@@ -7,7 +7,7 @@ function OwnerProperties() {
     const [editingProperty, setEditingProperty] = useState(null);
     const [editData, setEditData] = useState({});
     const [loading, setLoading] = useState(true);
-    const [selectedProperty, setSelectedProperty] = useState(null); // New state for detailed view
+    const [selectedProperty, setSelectedProperty] = useState(null);
     const currentUserId = localStorage.getItem('userId');
 
     const fetchProps = async () => {
@@ -18,7 +18,6 @@ function OwnerProperties() {
             );
             setProperties(mine);
             
-            // If currently viewing a property, update its data to reflect any changes
             if (selectedProperty) {
                 const updatedSelected = mine.find(p => p._id === selectedProperty._id);
                 if (updatedSelected) {
@@ -64,11 +63,9 @@ function OwnerProperties() {
             await axios.delete(`${ENDPOINTS.GET_PROPERTIES}/${id}`);
             sessionStorage.setItem('flash', 'Property deleted successfully!');
             
-            // If deleting from the detailed view, close the detailed view
             if (selectedProperty && selectedProperty._id === id) {
                 setSelectedProperty(null);
             }
-            
             fetchProps();
         } catch (error) {
             console.error("Delete failed", error);
@@ -77,7 +74,6 @@ function OwnerProperties() {
 
     if (loading) return <div className="p-4" style={{ color: '#64748b' }}>Loading properties...</div>;
 
-    // 1. Render the Edit Form if a property is being edited
     if (editingProperty) {
         return (
             <div className="table-responsive rounded-3 overflow-hidden">
@@ -92,9 +88,9 @@ function OwnerProperties() {
                             <label className="small" style={{ color: '#64748b' }}>Amount (₹)</label>
                             <input type="number" name="propertyAmt" className="form-control dark-input" value={editData.propertyAmt || 0} onChange={handleEditChange} required />
                         </div>
-                        <div className="col-12">
-                            <label className="small" style={{ color: '#64748b' }}>Full Address</label>
-                            <input type="text" name="propertyAddress" className="form-control dark-input" value={editData.propertyAddress || ''} onChange={handleEditChange} required />
+                        <div className="col-md-6">
+                            <label className="small" style={{ color: '#64748b' }}>State</label>
+                            <input type="text" name="state" className="form-control dark-input" value={editData.state || ''} onChange={handleEditChange} required />
                         </div>
                         <div className="col-md-6">
                             <label className="small" style={{ color: '#64748b' }}>Availability Status</label>
@@ -102,6 +98,10 @@ function OwnerProperties() {
                                 <option value="Available">Available</option>
                                 <option value="Unavailable">Unavailable</option>
                             </select>
+                        </div>
+                        <div className="col-12">
+                            <label className="small" style={{ color: '#64748b' }}>Full Address</label>
+                            <input type="text" name="propertyAddress" className="form-control dark-input" value={editData.propertyAddress || ''} onChange={handleEditChange} required />
                         </div>
                         <div className="col-12 d-flex gap-2 mt-4">
                             <button type="submit" className="btn px-4 fw-bold" style={{ background: 'linear-gradient(90deg, #4ECDC4, #45B7D1)', color: 'white', border: 'none' }}>Save Changes</button>
@@ -113,7 +113,6 @@ function OwnerProperties() {
         );
     }
 
-    // 2. Render the Detailed View if a property is selected
     if (selectedProperty) {
         return (
             <div className="card border-0 shadow-sm" style={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '2px solid #e0e7ff' }}>
@@ -154,7 +153,8 @@ function OwnerProperties() {
                             
                             <div className="mb-3">
                                 <h6 className="fw-bold" style={{ color: '#64748b' }}>Address</h6>
-                                <p style={{ color: '#2d3748' }}>{selectedProperty.propertyAddress}</p>
+                                <p style={{ color: '#2d3748', marginBottom: '4px' }}>{selectedProperty.propertyAddress}</p>
+                                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>{selectedProperty.state || 'State not specified'}</p>
                             </div>
                             
                             <div className="mb-3">
@@ -192,7 +192,6 @@ function OwnerProperties() {
         );
     }
 
-    // 3. Render the standard Table List View
     return (
         <div className="table-responsive rounded-3 overflow-hidden">
             <table className="table table-hover mb-0 align-middle text-center border" style={{ borderColor: '#e0e7ff' }}>
@@ -200,7 +199,7 @@ function OwnerProperties() {
                     <tr>
                         <th className="py-3 px-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Property Name</th>
                         <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Type</th>
-                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Address</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Location</th>
                         <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Amount</th>
                         <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Status</th>
                         <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Actions</th>
@@ -217,7 +216,9 @@ function OwnerProperties() {
                                 {p.propertyTitle}
                             </td>
                             <td style={{ color: '#64748b' }}>{p.propertyType} ({p.propertyAdType})</td>
-                            <td className="text-truncate" style={{ maxWidth: '200px', color: '#64748b' }}>{p.propertyAddress}</td>
+                            <td className="text-truncate" style={{ maxWidth: '200px', color: '#64748b' }}>
+                                {p.state ? `${p.state}` : p.propertyAddress}
+                            </td>
                             <td style={{ color: '#22c55e', fontWeight: 'bold' }}>₹{p.propertyAmt}</td>
                             <td>
                                 <span className={`badge rounded-pill ${p.status === 'Available' ? 'bg-success' : 'bg-danger'}`}>

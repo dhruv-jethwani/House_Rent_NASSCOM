@@ -2,13 +2,14 @@ import Property from "../models/property.model.js";
 
 async function createProperty(req, res){
     try {
-        const { propertyTitle, propertyType, propertyAdType, propertyAddress, ownerContact, propertyAmt, propertyImage, additionalInfo, ownerName, ownerId } = req.body;
+        const { propertyTitle, propertyType, propertyAdType, propertyAddress, state, ownerContact, propertyAmt, propertyImage, additionalInfo, ownerName, ownerId } = req.body;
         
-        if (!ownerId || !propertyTitle || !propertyType || !propertyAdType || !propertyAddress || !ownerContact || !propertyImage) {
+        if (!ownerId || !propertyTitle || !propertyType || !propertyAdType || !propertyAddress || !state || !ownerContact || !propertyImage) {
             return res.status(400).json({ message: "Missing required property fields." });
         }
 
-        await Property.create({ ownerId, propertyTitle, propertyType, propertyAdType, propertyAddress, ownerContact, propertyAmt, propertyImage, additionalInfo, ownerName });
+        await Property.create({ ownerId, propertyTitle, propertyType, propertyAdType, propertyAddress, state, ownerContact, propertyAmt, propertyImage, additionalInfo, ownerName });
+        
         return res.status(201).json({ message: "Property Created Successfully." });
     } catch (error) {
         console.error(error);

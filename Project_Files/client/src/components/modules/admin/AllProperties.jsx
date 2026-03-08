@@ -127,14 +127,14 @@ function AllProperties() {
     return (
         <div className="table-responsive rounded-3 overflow-hidden" style={{ border: '2px solid #e0e7ff' }}>
             <table className="table table-hover mb-0 align-middle text-center">
-                <thead style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFA07A)' }}>
+                <thead style={{ background: 'linear-gradient(90deg, #f0f4ff, #e8f5ff)' }}>
                     <tr>
-                        <th className="py-3 px-4" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Property Title</th>
-                        <th className="py-3" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Type</th>
-                        <th className="py-3" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Address</th>
-                        <th className="py-3" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Owner</th>
-                        <th className="py-3" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Amount</th>
-                        <th className="py-3" style={{ border: 'none', color: '#ffffff', fontWeight: 'bold' }}>Actions</th>
+                        <th className="py-3 px-4" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Property Title</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Type</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Address</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Owner</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Amount</th>
+                        <th className="py-3" style={{ border: 'none', color: '#FF6B6B', fontWeight: 'bold' }}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

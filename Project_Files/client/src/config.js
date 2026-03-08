@@ -6,11 +6,9 @@ export const ENDPOINTS = {
     GET_USERS: `${API_BASE_URL}/users`,
     UPDATE_USER_STATUS: (id) => `${API_BASE_URL}/users/${id}/status`,
     
-    // NEW Profile Endpoints
+    // Profile Endpoints
     GET_PROFILE: `${API_BASE_URL}/profile`,
     UPDATE_PROFILE: `${API_BASE_URL}/profile`,
-    
-    DELETE_USER: (id) => `${API_BASE_URL}/users/${id}`,
     
     ADD_PROPERTY: `${API_BASE_URL}/property`,
     GET_PROPERTIES: `${API_BASE_URL}/properties`,
@@ -22,4 +20,7 @@ export const ENDPOINTS = {
     GET_OWNER_BOOKINGS: `${API_BASE_URL}/owner-bookings`,
     GET_ALL_BOOKINGS: `${API_BASE_URL}/all-bookings`,
     UPDATE_BOOKING: (id) => `${API_BASE_URL}/booking/${id}`,
+    
+    // NEW: Delete Booking Endpoint
+    DELETE_BOOKING: (id) => `${API_BASE_URL}/booking/${id}`,
 };
