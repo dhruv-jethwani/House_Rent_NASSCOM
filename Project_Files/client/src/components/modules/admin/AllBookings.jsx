@@ -38,7 +38,7 @@ function AllBookings() {
             fetchBookings();
         } catch (error) {
             console.error("Failed to update booking status:", error);
-            alert("Failed to update booking status");
+            alert(error.response?.data?.message || "Failed to update booking status");
         }
     };
 
@@ -77,7 +77,9 @@ function AllBookings() {
                             </td>
                             <td>
                                 <div className="d-flex justify-content-center gap-2">
-                                    {booking.bookingStatus === 'pending' ? (
+                                    {booking.bookingStatus === 'rejected' ? (
+                                        <span className="badge bg-secondary py-2 px-3 rounded-pill">Unchangeable</span>
+                                    ) : booking.bookingStatus === 'pending' ? (
                                         <>
                                             <button onClick={() => handleStatusChange(booking._id, 'booked')} className="btn btn-sm rounded-pill px-2" style={{ background: 'linear-gradient(90deg, #4ECDC4, #45B7D1)', color: 'white', border: 'none' }}>
                                                 Approve

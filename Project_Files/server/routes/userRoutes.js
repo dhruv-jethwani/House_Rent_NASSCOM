@@ -1,12 +1,18 @@
 import express from 'express';
-import { controlUser, loginUser, getUser } from '../controllers/user.controller.js';
+import { controlUser, loginUser, getUser, getUserProfile, updateUserProfile } from '../controllers/user.controller.js';
 import User from '../models/user.model.js';
+import { verifyToken } from '../middleware/authMiddleware.js'; // Added verifyToken
 
 const router = express.Router();
 
 router.post('/register', controlUser);
 router.post('/login', loginUser);
 router.get('/users', getUser);
+
+// NEW: Profile Routes (Protected)
+router.get('/profile', verifyToken, getUserProfile);
+router.put('/profile', verifyToken, updateUserProfile);
+
 
 router.put('/users/:id/status', async (req, res) => {
     try {
@@ -17,6 +23,7 @@ router.put('/users/:id/status', async (req, res) => {
         res.status(500).json({ message: "Failed to update status" });
     }
 });
+
 // Delete a specific user (Admin action)
 router.delete('/users/:id', async (req, res) => {
     try {

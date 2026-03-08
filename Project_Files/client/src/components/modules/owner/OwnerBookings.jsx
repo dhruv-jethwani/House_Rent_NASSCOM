@@ -36,7 +36,7 @@ function OwnerBookings() {
             fetchBookings();
         } catch (error) {
             console.error("Failed to update booking status:", error);
-            alert("Failed to update booking status");
+            alert(error.response?.data?.message || "Failed to update booking status");
         }
     };
 
@@ -60,13 +60,22 @@ function OwnerBookings() {
                             <td className="small" style={{ color: '#64748b' }}>{typeof b.propertyId === 'object' ? b.propertyId?._id?.substring(0,10) : b.propertyId?.substring(0,10)}...</td>
                             <td style={{ color: '#2d3748' }}>{b.userName}</td>
                             <td style={{ color: '#2d3748' }}>{b.phone}</td>
-                            <td style={{ color: b.bookingStatus === 'booked' ? '#22c55e' : '#f59e0b' }}>{b.bookingStatus}</td>
+                            <td style={{ color: b.bookingStatus === 'booked' ? '#22c55e' : b.bookingStatus === 'rejected' ? '#ef4444' : '#f59e0b' }}>
+                                {b.bookingStatus.toUpperCase()}
+                            </td>
                             <td>
-                                {b.bookingStatus === 'pending' ? (
-                                    <button onClick={() => handleStatusChange(b._id, 'booked')} className="btn btn-sm rounded-pill px-3" style={{ background: 'linear-gradient(90deg, #4ECDC4, #45B7D1)', color: 'white', border: 'none' }}>Mark Booked</button>
-                                ) : (
-                                    <button onClick={() => handleStatusChange(b._id, 'pending')} className="btn btn-sm rounded-pill px-3" style={{ background: 'linear-gradient(90deg, #FFB84D, #FFA07A)', color: 'white', border: 'none' }}>Mark Pending</button>
-                                )}
+                                <div className="d-flex justify-content-center gap-2">
+                                    {b.bookingStatus === 'rejected' ? (
+                                        <span className="badge bg-secondary py-2 px-3 rounded-pill">Unchangeable</span>
+                                    ) : b.bookingStatus === 'pending' ? (
+                                        <>
+                                            <button onClick={() => handleStatusChange(b._id, 'booked')} className="btn btn-sm rounded-pill px-3" style={{ background: 'linear-gradient(90deg, #4ECDC4, #45B7D1)', color: 'white', border: 'none' }}>Approve</button>
+                                            <button onClick={() => handleStatusChange(b._id, 'rejected')} className="btn btn-sm rounded-pill px-3" style={{ background: 'linear-gradient(90deg, #FF6B6B, #FFA07A)', color: 'white', border: 'none' }}>Reject</button>
+                                        </>
+                                    ) : (
+                                        <button onClick={() => handleStatusChange(b._id, 'pending')} className="btn btn-sm rounded-pill px-3" style={{ background: 'linear-gradient(90deg, #FFB84D, #FFA07A)', color: 'white', border: 'none' }}>Mark Pending</button>
+                                    )}
+                                </div>
                             </td>
                         </tr>
                     ))}

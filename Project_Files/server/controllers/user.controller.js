@@ -10,7 +10,7 @@ async function controlUser(req, res){
         const salt = await bcrypt.genSalt(10);
         const hashed_password = await bcrypt.hash(password, salt);
         const grantedStatus = type === "Owner" ? "pending" : "granted";
-
+        
         await User.create({ username, email, password: hashed_password, type, granted: grantedStatus });
         res.status(201).json({ message: "User created Successfully." });
     } catch (error) {
@@ -54,4 +54,54 @@ async function getUser(req, res) {
     }
 }
 
-export { controlUser, loginUser, getUser };
+async function getUserProfile(req, res) {
+    try {
+        const user = await User.findById(req.user.userid).select('-password');
+        if (!user) return res.status(404).json({ message: "User not found" });
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Failed to retrieve profile" });
+    }
+}
+
+async function updateUserProfile(req, res) {
+    try {
+        const { username, email, password, addBalance } = req.body;
+        const user = await User.findById(req.user.userid);
+        
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        // Update profile fields
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        // NEW: Handle adding funds to balance
+        if (addBalance && !isNaN(addBalance)) {
+            user.balance += Number(addBalance);
+        }
+
+        const updatedUser = await user.save();
+        
+        return res.status(200).json({ 
+            message: "Profile updated successfully", 
+            user: { 
+                username: updatedUser.username, 
+                email: updatedUser.email,
+                balance: updatedUser.balance // Send back the updated balance
+            } 
+        });
+    } catch (error) {
+        console.error(error);
+        if (error.code === 11000) {
+            return res.status(400).json({ message: "Username or email already exists." });
+        }
+        return res.status(500).json({ message: "Failed to update profile" });
+    }
+}
+
+export { controlUser, loginUser, getUser, getUserProfile, updateUserProfile };

@@ -6,6 +6,12 @@ export const ENDPOINTS = {
     GET_USERS: `${API_BASE_URL}/users`,
     UPDATE_USER_STATUS: (id) => `${API_BASE_URL}/users/${id}/status`,
     
+    // NEW Profile Endpoints
+    GET_PROFILE: `${API_BASE_URL}/profile`,
+    UPDATE_PROFILE: `${API_BASE_URL}/profile`,
+    
+    DELETE_USER: (id) => `${API_BASE_URL}/users/${id}`,
+    
     ADD_PROPERTY: `${API_BASE_URL}/property`,
     GET_PROPERTIES: `${API_BASE_URL}/properties`,
     UPDATE_PROPERTY: (id) => `${API_BASE_URL}/property/${id}`,

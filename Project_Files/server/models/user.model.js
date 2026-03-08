@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema({
         type: String, 
         enum: ["pending", "granted", "rejected"], 
         default: "pending" 
+    },
+    // NEW: Added account balance
+    balance: {
+        type: Number,
+        default: 0
     }
 }, { timestamps: true });
 
