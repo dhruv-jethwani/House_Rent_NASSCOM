@@ -1,4 +1,0 @@
-->Project Milestones & Tasks
-->Sprint Delivery Plan
-->Project Progress Tracking
-->Team management tool for agile planning (e.g. Trello, Jira, etc.)
