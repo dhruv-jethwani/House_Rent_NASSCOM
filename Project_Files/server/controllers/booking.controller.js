@@ -14,14 +14,22 @@ export const createBooking = async (req, res) => {
         }
 
         // 2. Prevent a user from sending multiple requests for the same property
-        const existingRequest = await Booking.findOne({ 
-            propertyId, 
-            userID, 
-            bookingStatus: { $in: ['pending', 'booked'] } 
+        const existingRequest = await Booking.findOne({
+            propertyId,
+            userID,
+            bookingStatus: { $in: ['pending', 'booked'] }
         });
-        
+
         if (existingRequest) {
             return res.status(400).json({ message: "You have already sent a request for this property." });
+        }
+
+        // 3. Check for sufficient funds BEFORE creating the booking request
+        const user = await User.findById(userID);
+        if (user.balance < property.propertyAmt) {
+            return res.status(400).json({ 
+                message: `Insufficient funds. You need at least ₹${property.propertyAmt} to book this property.` 
+            });
         }
 
         await Booking.create(req.body);
