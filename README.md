@@ -216,7 +216,7 @@ npm install
 
 Inside the server folder run:
 ```bash
-npm start
+npm run dev
 ```
 Important note:
 When the backend runs for the first time, it automatically creates a **default Administrator account** inside the database to allow platform management.
@@ -227,7 +227,7 @@ When the backend runs for the first time, it automatically creates a **default A
 
 Inside the client folder run:
 ```bash
-npm start
+npm run dev
 ```
 ---
 
@@ -235,7 +235,7 @@ npm start
 
 Open your browser and navigate to:
 ```bash
-http://localhost:3000
+http://localhost:5173/
 ```
 ---
 
