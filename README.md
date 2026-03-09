@@ -24,7 +24,7 @@ By integrating structured data management, financial tracking, and administrativ
 House Rent implements strict **role-based access control** with separate dashboards:
 
 * **Admin** – Platform oversight and verification
-* Admin User made on running the backend code, credentials-
+* Admin User made by default on running the backend code, credentials-
   
   Username: Admin
   
