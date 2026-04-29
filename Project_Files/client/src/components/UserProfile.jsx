@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { ENDPOINTS } from '../config';
+import { animate, stagger } from 'animejs';
 
 function UserProfile() {
     const [formData, setFormData] = useState({
@@ -8,11 +9,25 @@ function UserProfile() {
         email: '',
         password: ''
     });
-    const [balance, setBalance] = useState(0); // State for user wallet balance
-    const [addAmount, setAddAmount] = useState(''); // State for adding funds
+    const [balance, setBalance] = useState(0); 
+    const [addAmount, setAddAmount] = useState(''); 
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [funding, setFunding] = useState(false);
+    
+    const [hidden, setHidden] = useState(true);
+    const iconRef = useRef(null);
+
+    const togglePassword = () => {
+        setHidden(!hidden);
+        
+        animate(iconRef.current, {
+            scale: [1, 1.3, 1],
+            rotate: hidden ? [0, 15, 0] : [0, -15, 0],
+            duration: 400,
+            easing: 'easeOutElastic(1, .8)'
+        });
+    };
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -162,15 +177,29 @@ function UserProfile() {
 
                         <div className="mb-4">
                             <label className="form-label small fw-semibold" style={{ color: '#64748b' }}>New Password (leave blank to keep current)</label>
-                            <input 
-                                type="password" 
-                                className="form-control dark-input py-2" 
-                                name="password" 
-                                placeholder="Enter new password..."
-                                value={formData.password} 
-                                onChange={handleChange}
-                                minLength="6"
-                            />
+                            <div className="position-relative">
+                                <input 
+                                    type={hidden ? "password" : "text"}
+                                    className="form-control dark-input py-2 pe-5" 
+                                    name="password" 
+                                    placeholder="Enter new password..."
+                                    value={formData.password} 
+                                    onChange={handleChange}
+                                    minLength="6"
+                                />
+                                <button 
+                                    className="btn position-absolute top-50 end-0 translate-middle-y border-0" 
+                                    style={{ color: '#2d3748', background: 'transparent', zIndex: 10 }} 
+                                    type="button" 
+                                    onClick={togglePassword}
+                                >
+                                    <i 
+                                        ref={iconRef} 
+                                        className={`bi ${hidden ? 'bi-eye-slash-fill' : 'bi-eye-fill'} fs-5`}
+                                        style={{ display: 'inline-block' }}
+                                    ></i>
+                                </button>
+                            </div>
                         </div>
 
                         <button 

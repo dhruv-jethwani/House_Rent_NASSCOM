@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { ENDPOINTS } from '../config';
+import { animate, stagger } from 'animejs';
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -11,6 +12,18 @@ function Register() {
     const [hidden, setHidden] = useState(true);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const iconRef = useRef(null);
+
+    const togglePassword = () => {
+        setHidden(!hidden);
+        
+        animate(iconRef.current, {
+            scale: [1, 1.3, 1],
+            rotate: hidden ? [0, 15, 0] : [0, -15, 0],
+            duration: 400,
+            easing: 'easeOutElastic(1, .8)'
+        });
+    };
 
     async function onsubmit(e) {
         e.preventDefault();
@@ -53,8 +66,28 @@ function Register() {
                                     <input type="email" className="form-control border-0 bg-light py-3" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ color: '#2d3748' }} required />
                                 </div>
                                 <div className="mb-4 position-relative">
-                                    <input type={hidden ? "password" : "text"} className="form-control border-0 bg-light py-3" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ color: '#2d3748' }} required minLength="6" />
-                                    <button className="btn position-absolute top-50 end-0 translate-middle-y" style={{ color: '#64748b' }} type="button" onClick={() => setHidden(!hidden)}>Show</button>
+                                    <input 
+                                        type={hidden ? "password" : "text"} 
+                                        className="form-control border-0 bg-light py-3 pe-5" 
+                                        placeholder="Password" 
+                                        value={password} 
+                                        onChange={(e) => setPassword(e.target.value)} 
+                                        style={{ color: '#2d3748' }} 
+                                        required 
+                                        minLength="6" 
+                                    />
+                                    <button 
+                                        className="btn position-absolute top-50 end-0 translate-middle-y border-0" 
+                                        style={{ color: '#2d3748', background: 'transparent', zIndex: 10 }} 
+                                        type="button" 
+                                        onClick={togglePassword}
+                                    >
+                                        <i 
+                                            ref={iconRef} 
+                                            className={`bi ${hidden ? 'bi-eye-slash-fill' : 'bi-eye-fill'} fs-5`}
+                                            style={{ display: 'inline-block' }}
+                                        ></i>
+                                    </button>
                                 </div>
                                 <button className="btn house-rent-btn w-100 py-3 mb-3" type="submit" disabled={loading}>
                                     {loading ? "Loading..." : "REGISTER"}
