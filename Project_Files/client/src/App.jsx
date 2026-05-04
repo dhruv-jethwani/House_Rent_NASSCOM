@@ -20,18 +20,46 @@ function App() {
   const userType = type ? type.toLowerCase() : null;
 
   useEffect(() => {
-  const msg = sessionStorage.getItem('flash');
-  if (msg) {
-    setFlash(msg);
-    sessionStorage.removeItem('flash');
-    
-    const timer = setTimeout(() => {
-      setFlash('');
-    }, 4000);
+    let timer; // Keeps track of the timeout so messages don't disappear prematurely 
 
-    return () => clearTimeout(timer);
-  }
-}, [location.pathname]);
+    const handleFlash = () => {
+      const msg = sessionStorage.getItem('flash');
+      if (msg) {
+        setFlash(msg);
+        sessionStorage.removeItem('flash');
+        
+        // Clear existing timer if a new message comes in quickly
+        if (timer) clearTimeout(timer);
+        
+        timer = setTimeout(() => {
+          setFlash('');
+        }, 4000);
+      }
+    };
+
+    // 1. Check for flash messages on component mount or route change
+    handleFlash();
+
+    // 2. Intercept sessionStorage.setItem to trigger flash instantly on the same page
+    const originalSetItem = sessionStorage.setItem;
+    sessionStorage.setItem = function (key, value) {
+      originalSetItem.apply(this, arguments);
+      // If a flash message is set, alert the app immediately
+      if (key === 'flash') {
+        window.dispatchEvent(new Event('flashUpdate'));
+      }
+    };
+
+    // 3. Listen for the custom flash update event
+    window.addEventListener('flashUpdate', handleFlash);
+
+    return () => {
+      // Cleanup interceptor and listeners on unmount
+      window.removeEventListener('flashUpdate', handleFlash);
+      sessionStorage.setItem = originalSetItem; 
+      if (timer) clearTimeout(timer);
+    };
+  }, [location.pathname]);
 
   return (
     <div className="dashboard-wrapper" style={{ paddingTop: '80px' }}>

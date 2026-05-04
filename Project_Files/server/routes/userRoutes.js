@@ -1,7 +1,8 @@
 import express from 'express';
-import { controlUser, loginUser, getUser, getUserProfile, updateUserProfile } from '../controllers/user.controller.js';
+// Import deleteUser from your controller
+import { controlUser, loginUser, getUser, getUserProfile, updateUserProfile, deleteUser } from '../controllers/user.controller.js';
 import User from '../models/user.model.js';
-import { verifyToken } from '../middleware/authMiddleware.js'; // Added verifyToken
+import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -9,10 +10,9 @@ router.post('/register', controlUser);
 router.post('/login', loginUser);
 router.get('/users', getUser);
 
-// NEW: Profile Routes (Protected)
+// Profile Routes (Protected)
 router.get('/profile', verifyToken, getUserProfile);
 router.put('/profile', verifyToken, updateUserProfile);
-
 
 router.put('/users/:id/status', async (req, res) => {
     try {
@@ -24,14 +24,7 @@ router.put('/users/:id/status', async (req, res) => {
     }
 });
 
-// Delete a specific user (Admin action)
-router.delete('/users/:id', async (req, res) => {
-    try {
-        await User.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "User deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ message: "Failed to delete user" });
-    }
-});
+// Clean, simple route pointing to the controller!
+router.delete('/users/:id', deleteUser);
 
 export default router;

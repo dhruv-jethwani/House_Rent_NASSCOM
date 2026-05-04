@@ -1,4 +1,6 @@
 import User from "../models/user.model.js";
+import Property from "../models/property.model.js";
+import Booking from "../models/booking.model.js";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
 
@@ -104,4 +106,32 @@ async function updateUserProfile(req, res) {
     }
 }
 
-export { controlUser, loginUser, getUser, getUserProfile, updateUserProfile };
+async function deleteUser(req, res) {
+    try {
+        const userId = req.params.id;
+
+        // 1. Delete all properties owned by this user
+        await Property.deleteMany({ ownerId: userId });
+
+        // 2. Delete all bookings where this user is the Renter OR the Owner
+        await Booking.deleteMany({ 
+            $or: [
+                { userID: userId }, 
+                { ownerID: userId }
+            ] 
+        });
+
+        // 3. Finally, delete the user themselves
+        const user = await User.findByIdAndDelete(userId);
+        
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json({ message: "User and all associated listings/bookings deleted successfully" });
+    } catch (error) {
+        console.error("Cascade delete error:", error);
+        res.status(500).json({ message: "Failed to delete user and their data" });
+    }
+}
+
+// Don't forget to export the new function at the bottom!
+export { controlUser, loginUser, getUser, getUserProfile, updateUserProfile, deleteUser };

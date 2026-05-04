@@ -12,8 +12,9 @@ export const ENDPOINTS = {
     
     ADD_PROPERTY: `${API_BASE_URL}/property`,
     GET_PROPERTIES: `${API_BASE_URL}/properties`,
-    UPDATE_PROPERTY: (id) => `${API_BASE_URL}/property/${id}`,
-    DELETE_PROPERTY: (id) => `${API_BASE_URL}/property/${id}`,
+    // FIXED: Changed /property/${id} to /properties/${id} to match backend routes
+    UPDATE_PROPERTY: (id) => `${API_BASE_URL}/properties/${id}`,
+    DELETE_PROPERTY: (id) => `${API_BASE_URL}/properties/${id}`,
     
     CREATE_BOOKING: `${API_BASE_URL}/booking`,
     GET_BOOKINGS: `${API_BASE_URL}/bookings`,
